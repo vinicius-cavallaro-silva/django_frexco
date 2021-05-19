@@ -1,16 +1,10 @@
 from django.db import models
-from datetime import datetime
 
 # Create your models here.
 
-class DateMixing:
-    created = models.DateTimeField(default=datetime.utcnow)
-    updated = models.DateTimeField(default=datetime.utcnow)
-
-class Organizacoes(DateMixing, models.Model):
-    __tablename__ = 'organizacoes'
-    __table_args__ = {'schema': 'pipedrive'}
-
+class Organizacoes(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     id = models.IntegerField(primary_key=True)
     nome = models.CharField(max_length=200, null=True)
     etiqueta = models.CharField(max_length=200, null=True)
@@ -67,10 +61,9 @@ class Organizacoes(DateMixing, models.Model):
 
 
 
-class Negocios(DateMixing, models.Model):
-    __tablename__ = 'negocios'
-    __table_args__ = {'schema': 'pipedrive'}
-
+class Negocios(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     id = models.IntegerField(primary_key=True)
     id_organizacao = models.ForeignKey("Organizacoes", on_delete=models.SET_NULL, null=True)
     funil = models.CharField(max_length=200, null=True)
@@ -123,10 +116,9 @@ class Negocios(DateMixing, models.Model):
     ultimo_email_recebido = models.DateTimeField(null=True)
 
 
-class Atividades(DateMixing, models.Model):
-    __tablename__ = 'atividades'
-    __table_args__ = {'schema': 'pipedrive'}
-
+class Atividades(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     id = models.IntegerField(primary_key=True)
     id_negocios = models.ForeignKey("Negocios", on_delete=models.SET_NULL, null=True)
     concluido = models.CharField(max_length=200, null=True)
